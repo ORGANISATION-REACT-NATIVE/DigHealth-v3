@@ -1,132 +1,85 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [phone, setPhone] = useState('');
-  const [nationality, setNationality] = useState('');
-  const [role, setRole] = useState('');
+  const [username, setUsername] = useState('');
+  const [country, setCountry] = useState('USA');
 
-  const handleSignup = () => {
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const { uid } = userCredential.user;
-        firestore.collection('users').doc(uid).set({
-          email,
-          password,
-          name,
-          surname,
-          phone,
-          nationality,
-          role,
-        });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  const handleSignUp = () => {
+    // handle sign up logic here
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Sign Up</Text>
       <TextInput
+        style={styles.input}
         placeholder="Email"
+        onChangeText={setEmail}
         value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
       />
       <TextInput
+        style={styles.input}
         placeholder="Password"
+        onChangeText={setPassword}
         value={password}
-        onChangeText={(text) => setPassword(text)}
         secureTextEntry
-        style={styles.input}
       />
       <TextInput
-        placeholder="Name"
-        value={name}
-        onChangeText={(text) => setName(text)}
         style={styles.input}
+        placeholder="Username"
+        onChangeText={setUsername}
+        value={username}
       />
-      <TextInput
-        placeholder="Surname"
-        value={surname}
-        onChangeText={(text) => setSurname(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Phone"
-        value={phone}
-        onChangeText={(text) => setPhone(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Nationality"
-        value={nationality}
-        onChangeText={(text) => setNationality(text)}
-        style={styles.input}
-      />
-      <TouchableOpacity
-        style={[styles.button, role === 'doctor' && styles.selectedButton]}
-        onPress={() => setRole('doctor')}
-      >
-        <Text style={styles.buttonText}>Doctor</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.button, role === 'patient' && styles.selectedButton]}
-        onPress={() => setRole('patient')}
-      >
-        <Text style={styles.buttonText}>Patient</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Signup</Text>
-      </TouchableOpacity>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={country}
+          onValueChange={setCountry}
+          style={styles.picker}
+        >
+          <Picker.Item label="USA" value="USA" />
+          <Picker.Item label="Canada" value="Canada" />
+          <Picker.Item label="Mexico" value="Mexico" />
+          <Picker.Item label="France" value="France" />
+          <Picker.Item label="Germany" value="Germany" />
+          <Picker.Item label="Spain" value="Spain" />
+        </Picker>
+      </View>
+      <Button title="Sign Up" onPress={handleSignUp} />
     </View>
   );
 };
 
+export default SignupScreen
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
   input: {
-    width: '80%',
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
   },
-  button: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginVertical: 10,
-    },
-    selectedButton: {
-    backgroundColor: '#3E8E41',
-    },
-    buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    },
-    });
-    
-    export default SignupScreen;
-    
-    
-    
-    
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  picker: {
+    height: 40,
+  },
+});
