@@ -1,65 +1,40 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('Logged in successfully!');
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  const handleSignup = () => {
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const { uid } = userCredential.user;
-        firestore.collection('users').doc(uid).set({
-          email,
-          password,
-          name: '',
-          surname: '',
-          phone: '',
-          nationality: '',
-          role: '',
-        });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    if (email === 'evrad@gmail.com' && password === 'Naruto16') {
+      // Connexion réussie, naviguer vers la page d'accueil
+      console.log('Connexion réussie');
+    } else {
+      // Informations de connexion incorrectes, afficher un message d'erreur
+      console.log('Informations de connexion incorrectes');
+    }
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Connexion</Text>
       <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
         style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
         style={styles.input}
+        value={password}
+        onChangeText={setPassword}
+        placeholder="Mot de passe"
+        secureTextEntry={true}
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Signup</Text>
+        <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
     </View>
   );
@@ -71,25 +46,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
+  },
   input: {
     width: '80%',
-    height: 40,
+    height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 10,
+    borderRadius: 5,
+    padding: 10,
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginBottom: 20,
+    backgroundColor: '#4CAF50',
+    borderRadius: 5,
+    padding: 10,
   },
   buttonText: {
     color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
