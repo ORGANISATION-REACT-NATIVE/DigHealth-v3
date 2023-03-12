@@ -3,10 +3,11 @@ import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'rea
 import { Picker } from '@react-native-picker/picker';
 import { RadioButton } from 'react-native-paper';
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
   const [userType, setUserType] = useState('');
 
@@ -15,12 +16,14 @@ const SignupScreen = () => {
     console.log(`Password: ${password}`);
     console.log(`Confirmed Password: ${confirmPassword}`);
     console.log(`Country: ${country}`);
+    console.log(`Phone: ${phone}`);
     console.log(`User Type: ${userType}`);
+    navigation.navigate('Login');
   };
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registration Form</Text>
+      <Text style={styles.title}>Registration</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -40,6 +43,12 @@ const SignupScreen = () => {
         secureTextEntry
         onChangeText={(text) => setConfirmPassword(text)}
         value={confirmPassword}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Phone"
+        onChangeText={(text) => setPhone(text)}
+        value={phone}
       />
       <Picker
         style={styles.input}
