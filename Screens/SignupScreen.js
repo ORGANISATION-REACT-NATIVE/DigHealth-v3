@@ -1,85 +1,142 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { RadioButton } from 'react-native-paper';
 
 const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [country, setCountry] = useState('USA');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [country, setCountry] = useState('');
+  const [userType, setUserType] = useState('');
 
-  const handleSignUp = () => {
-    // handle sign up logic here
+  const handleRegister = () => {
+    console.log(`Email: ${email}`);
+    console.log(`Password: ${password}`);
+    console.log(`Confirmed Password: ${confirmPassword}`);
+    console.log(`Country: ${country}`);
+    console.log(`User Type: ${userType}`);
   };
-
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Registration Form</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
-        onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text)}
         value={email}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
-        onChangeText={setPassword}
-        value={password}
         secureTextEntry
+        onChangeText={(text) => setPassword(text)}
+        value={password}
       />
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        onChangeText={setUsername}
-        value={username}
+        placeholder="Confirm Password"
+        secureTextEntry
+        onChangeText={(text) => setConfirmPassword(text)}
+        value={confirmPassword}
       />
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={country}
-          onValueChange={setCountry}
-          style={styles.picker}
-        >
-          <Picker.Item label="USA" value="USA" />
-          <Picker.Item label="Canada" value="Canada" />
-          <Picker.Item label="Mexico" value="Mexico" />
-          <Picker.Item label="France" value="France" />
-          <Picker.Item label="Germany" value="Germany" />
-          <Picker.Item label="Spain" value="Spain" />
-        </Picker>
+      <Picker
+        style={styles.input}
+        selectedValue={country}
+        onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}
+      >
+        <Picker.Item label="Select your country" value="" />
+        <Picker.Item label="USA" value="USA" />
+        <Picker.Item label="Canada" value="Canada" />
+        <Picker.Item label="Mexico" value="Mexico" />
+      </Picker>
+      <View style={styles.radioButtons}>
+        <Text style={styles.radioText}>I am a:</Text>
+        <View style={styles.radioButton}>
+          <Text style={styles.radioLabel}>Patient</Text>
+          <RadioButton
+            value="patient"
+            status={userType === 'patient' ? 'checked' : 'unchecked'}
+            onPress={() => setUserType('patient')}
+          />
+        </View>
+        <View style={styles.radioButton}>
+          <Text style={styles.radioLabel}>Doctor</Text>
+          <RadioButton
+            value="doctor"
+            status={userType === 'doctor' ? 'checked' : 'unchecked'}
+            onPress={() => setUserType('doctor')}
+          />
+        </View>
       </View>
-      <Button title="Sign Up" onPress={handleSignUp} />
+      <TouchableOpacity style={styles.SignupBtn} onPress={handleRegister}>
+        <Text style={styles.SignupText}>SIGNUP</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default SignupScreen
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
   },
   input: {
     height: 40,
+    width: '80%',
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
     marginBottom: 10,
+    paddingLeft: 10,
   },
-  picker: {
-    height: 40,
+  radioButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginTop: 10,
   },
+  radioText: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  radioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  radioLabel: {
+    marginRight: 5,
+  },
+  SignupBtn:{
+    width: '80%',
+    backgroundColor: '#007aff',
+    borderRadius: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    elevation: 17,
+  },
+  SignupText:{
+    color: 'white',
+  }
 });
+
+export default SignupScreen
