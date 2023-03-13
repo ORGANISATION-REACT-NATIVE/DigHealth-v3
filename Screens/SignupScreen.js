@@ -23,7 +23,8 @@ const SignupScreen = ({ navigation }) => {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registration</Text>
+      <Text style={styles.title}>SIGNUP</Text>
+      <Text style={{paddingVertical: 20}}>To enter to DigHealth signup please</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -56,9 +57,12 @@ const SignupScreen = ({ navigation }) => {
         onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}
       >
         <Picker.Item label="Select your country" value="" />
+        <Picker.Item label='Cameroon' value="Cameroon" />
         <Picker.Item label="USA" value="USA" />
         <Picker.Item label="Canada" value="Canada" />
         <Picker.Item label="Mexico" value="Mexico" />
+        <Picker.Item label="France" value="France" />
+        <Picker.Item label="England" value="England" />
       </Picker>
       <View style={styles.radioButtons}>
         <Text style={styles.radioText}>I am a:</Text>
@@ -99,13 +103,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    height: 40,
     width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingLeft: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    height:60,
+    marginBottom: 20,
+    justifyContent: 'center',
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    elevation: 17,
+    height: 50,
+    color: 'black',
+    paddingVertical: 10,
   },
   radioButtons: {
     flexDirection: 'row',

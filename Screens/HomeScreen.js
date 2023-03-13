@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.appName}>My App Name</Text>
-        <TouchableOpacity style={styles.logoutButton}>
+        <Text style={styles.appName}>DigHealth</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={() => navigation.navigate('Login')}>
           <AntDesign name="logout" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -29,7 +29,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.floatingButton}>
+      <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('Map')}>
         <FontAwesome name="map-marker" size={24} color="black" />
       </TouchableOpacity>
     </View>
