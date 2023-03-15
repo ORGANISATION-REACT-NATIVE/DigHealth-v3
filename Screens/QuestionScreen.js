@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
 const symptoms = [
     'Fever',
@@ -24,7 +24,7 @@ const symptoms = [
     'Other symptoms',
 ];
 
-const QuestionScreen = () => {
+const QuestionScreen = ({ navigation }) => {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
 
   const toggleSymptom = symptom => {
@@ -49,15 +49,15 @@ const QuestionScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <ImageBackground  style={styles.container}>
       <Text style={styles.title}>What are your symptoms?</Text>
       <View style={styles.symptomsContainer}>
         {symptoms.map(renderSymptomButton)}
       </View>
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate('Success')}>
         <Text style={styles.submitButtonText}>Soumettre</Text>
       </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 };
 

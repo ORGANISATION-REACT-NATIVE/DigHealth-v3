@@ -7,6 +7,7 @@ import HomeScreen from '../Screens/HomeScreen'
 import SignupScreen from '../Screens/SignupScreen'
 import MapScreen from '../Screens/MapScreen'
 import QuestionScreen from '../Screens/QuestionScreen'
+import SuccessScreen from '../Screens/SuccessScreen'
 
 
 const tabs = createStackNavigator()
@@ -20,6 +21,7 @@ export default function Root() {
         <tabs.Screen name="Signup" component={SignupScreen} options={{headerShown: false}} />
         <tabs.Screen name='Map' component={MapScreen} options={{title: 'Search Hospital'}} />
         <tabs.Screen name='Question' component={QuestionScreen} options={{title: 'Symptom selection'}} />
+        <tabs.Screen name='Success' component={SuccessScreen} options={{title: 'Success', headerShown: false}} />
     </tabs.Navigator>
   )
 }
