@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { RadioButton } from 'react-native-paper';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from '@firebase/app';
+import { firebaseConfig } from '../Firebase';
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,6 +14,9 @@ const SignupScreen = ({ navigation }) => {
   const [country, setCountry] = useState('');
   const [userType, setUserType] = useState('');
 
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
   const handleRegister = () => {
     console.log(`Email: ${email}`);
     console.log(`Password: ${password}`);
@@ -18,7 +24,18 @@ const SignupScreen = ({ navigation }) => {
     console.log(`Country: ${country}`);
     console.log(`Phone: ${phone}`);
     console.log(`User Type: ${userType}`);
-    navigation.navigate('Login');
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log('User Created!');
+      const user = userCredential.user;
+      console.log(user);
+      navigation.navigate('Login');
+    })
+    .catch((error) => {
+      console.log(error.message);
+      Alert.alert('Error',error.message);
+    })
   };
   
   return (
@@ -85,6 +102,9 @@ const SignupScreen = ({ navigation }) => {
       </View>
       <TouchableOpacity style={styles.SignupBtn} onPress={handleRegister}>
         <Text style={styles.SignupText}>SIGNUP</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.SignupBtn} onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.SignupText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
   );
