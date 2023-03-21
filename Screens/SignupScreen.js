@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   SignupBtn:{
     width: '80%',
-    backgroundColor: '#007aff',
+    backgroundColor: '#0295CE',
     borderRadius: 10,
     height: 50,
     alignItems: 'center',

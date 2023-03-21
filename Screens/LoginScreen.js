@@ -8,7 +8,7 @@ import { firebaseConfig } from '../Firebase';
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('patient');
+  const [isDoctor, setIsDoctor] = useState(false);
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -19,15 +19,17 @@ const LoginScreen = ({ navigation }) => {
         console.log('Sign In!');
         const user = userCredential.user;
         console.log(user);
-        if (userType == 'patient'){
+        if(isDoctor) {
+          console.log('Doctor')
+          navigation.navigate('DoctorHome')
+        } else{
           console.log('Patient')
           navigation.navigate('Home')
-        } else{
-          console.log('Doctor')
         }
       })
       .catch((error) => {
         console.log(error.message);
+        Alert.alert("Error", error.message)
       })
   };
 
@@ -37,46 +39,53 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>DigHealth</Text>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
-          value={email}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          returnKeyType="next"
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Password..."
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
-      </View>
-      <View style={styles.radioButtonsContainer}>
-        <TouchableOpacity style={styles.radioButton} onPress={() => setUserType('patient')}>
-          <Image source={{uri: 'https://th.bing.com/th/id/OIP.GUMg6Hb0K1SEO-gUCkwhpgHaHa?pid=ImgDet&w=208&h=208&c=7&dpr=1.5'}} style={{width: 125, height: 130, borderRadius: 10, marginTop: 0, paddingTop: 0}} />
-          <Text style={styles.radioButtonText}>Patient</Text>
+      <Text style={styles.title}>DIGHEALTH</Text>
+
+      <View style={styles.radioButtonContainer}>
+        <TouchableOpacity
+          style={[styles.radioButton, isDoctor && styles.radioButtonSelected]}
+          onPress={() => setIsDoctor(true)}
+        >
+          <Text style={styles.radioButtonText}>Doctor</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.radioButton} onPress={() => setUserType('docteur')}>
-          <Image source={{uri: 'https://th.bing.com/th/id/OIP.3AChV9qTonQSmD2lSTezSgHaHa?pid=ImgDet&w=208&h=208&c=7&dpr=1.5'}} style={{width: 125, height: 130, borderRadius: 10, marginTop: 0, paddingTop: 0}} />
-          <Text style={styles.radioButtonText}>Docteur</Text>
+        <TouchableOpacity
+          style={[styles.radioButton, !isDoctor && styles.radioButtonSelected]}
+          onPress={() => setIsDoctor(false)}
+        >
+          <Text style={styles.radioButtonText}>Patient</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-        <Text style={styles.loginText}>LOGIN</Text>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+          value={password}
+          onChangeText={setPassword}
+        />
+      </View>
+
+      <View style={{marginTop: 30}}></View>
+
+      <TouchableOpacity style={styles.btnLogin} onPress={() => navigation.navigate('Home')}>
+        <Text style={styles.LoginText}>LOGIN</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.SignupBtn} onPress={handleSignup}>
-        <Text style={styles.SignupText}>SIGNUP</Text>
+        <Text style={styles.LoginText}>SIGNUP</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,22 +94,43 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
-  logo: {
+  title: {
+    fontSize: 40,
     fontWeight: 'bold',
-    fontSize: 50,
-    color: '#007aff',
-    marginBottom: 40,
+    marginBottom: 20,
   },
-  inputView: {
-    width: '80%',
+  radioButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  radioButton: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+  },
+  radioButtonSelected: {
+    backgroundColor: '#0295CE',
+  },
+  radioButtonText: {
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
-    height: 50,
-    marginBottom: 20,
+    height:60,
     justifyContent: 'center',
     padding: 20,
     shadowColor: '#000',
@@ -111,31 +141,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.46,
     shadowRadius: 11.14,
     elevation: 17,
-  },
-  inputText: {
     height: 50,
     color: 'black',
+    paddingVertical: 10,
   },
-  loginBtn: {
-    width: '80%',
-    backgroundColor: 'green',
-    borderRadius: 10,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.46,
-    shadowRadius: 11.14,
-    elevation: 17,
-  },
-  SignupBtn:{
-    width: '80%',
-    backgroundColor: '#007aff',
+  btnLogin: {
+    backgroundColor: '#07D1BF',
+    width: '100%',
     borderRadius: 10,
     height: 50,
     alignItems: 'center',
@@ -150,31 +162,27 @@ const styles = StyleSheet.create({
     shadowRadius: 11.14,
     elevation: 17,
   },
-  loginText: {
-    color: 'white',
-  },
-  SignupText:{
-    color: 'white',
-  },
-  radioButtonsContainer: {
-    flexDirection: 'row',
-    marginTop: 50,
-    marginBottom: 20,
-  },
-  radioButton: {
-    height: 30,
-    width: 100,
-    marginHorizontal: 30,
-    borderWidth: 1,
-    borderColor: '#003f5c',
+  SignupBtn:{
+    width: '100%',
+    backgroundColor: '#0295CE',
     borderRadius: 10,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 20,
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    elevation: 17,
   },
-  radioButtonText: {
-    color: '#003f5c',
+  LoginText: {
+    color: 'white',
     fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
