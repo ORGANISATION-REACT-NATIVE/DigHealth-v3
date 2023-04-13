@@ -81,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={{marginTop: 30}}></View>
 
-      <TouchableOpacity style={styles.btnLogin} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.btnLogin} onPress={handleLogin}>
         <Text style={styles.LoginText}>LOGIN</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.SignupBtn} onPress={handleSignup}>
@@ -102,6 +102,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#0295CE',
+    shadowColor: 'black'
   },
   radioButtonContainer: {
     flexDirection: 'row',

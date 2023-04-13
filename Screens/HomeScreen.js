@@ -2,35 +2,35 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView, ImageBackground } from 'react-native';
 import { Button, Card, Title, Paragraph, Divider, Avatar } from 'react-native-paper';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       
-      <ImageBackground source={{ uri: 'https://picsum.photos/800/600' }} style={styles.image}>
-        <Text style={styles.title}>Bienvenue sur DigHealth</Text>
-        <Button mode="contained" style={styles.button}>
-          Rechercher des hopitaux
+      <ImageBackground source={{ uri: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80' }} style={styles.image}>
+        <Text style={styles.title}>Welcome to DigHealth</Text>
+        <Button mode="contained" style={styles.button} onPress={() => navigation.navigate('Map')}>
+        search for hospitals
         </Button>
       </ImageBackground>
 
       <View style={styles.section}>
-        <Title style={styles.sectionTitle}>Fonctionnalités principales</Title>
+        <Title style={styles.sectionTitle}>Main features</Title>
         <View style={styles.featureRow}>
           <Card style={styles.featureCard}>
             <Card.Content>
               <Avatar.Icon size={60} icon="doctor" style={styles.featureIcon} />
-              <Title>Professionnels de santé</Title>
+              <Title>Healthcare professionals</Title>
               <Paragraph>
-                Trouvez et contactez des professionnels de santé pour prendre rendez-vous ou obtenir des conseils.
+              Find and contact healthcare professionals to make an appointment or get advice.
               </Paragraph>
             </Card.Content>
           </Card>
           <Card style={styles.featureCard}>
             <Card.Content>
               <Avatar.Icon size={60} icon="heart-pulse" style={styles.featureIcon} />
-              <Title>Suivi de la condition physique</Title>
+              <Title>Fitness tracking</Title>
               <Paragraph>
-                Suivez vos progrès en matière de condition physique, enregistrez vos activités physiques et suivez vos objectifs de remise en forme.
+              Track your fitness progress, record your physical activities, and monitor your fitness goals.
               </Paragraph>
             </Card.Content>
           </Card>
@@ -38,61 +38,33 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.section}>
-        <Title style={styles.sectionTitle}>Nos Services</Title>
+        <Title style={styles.sectionTitle}>Our Services</Title>
         <Card style={styles.serviceCard}>
-          <Card.Cover source={{ uri: 'https://picsum.photos/700/400' }} />
+          <Card.Cover source={{ uri: 'https://images.unsplash.com/photo-1616587894289-86480e533129?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80' }} />
           <Card.Content>
-            <Title>Consultations à distance</Title>
+            <Title>Remote consultations</Title>
             <Paragraph>
-              Consultez un professionnel de santé à distance, par vidéoconférence ou par téléphone, pour des conseils ou un suivi médical.
+            Consult with a healthcare professional remotely, via video conference or telephone, for advice or medical follow-up.
             </Paragraph>
           </Card.Content>
         </Card>
         <Card style={styles.serviceCard}>
-          <Card.Cover source={{ uri: 'https://picsum.photos/700/400' }} />
+          <Card.Cover source={{ uri: 'https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80' }} />
           <Card.Content>
-            <Title>Pharmacie en ligne</Title>
+            <Title>Online pharmacy</Title>
             <Paragraph>
-              Commandez vos médicaments en ligne et faites-vous livrer chez vous en toute sécurité.
+            Order your medication online and have it safely delivered to your doorstep.
             </Paragraph>
           </Card.Content>
         </Card>
       </View>
-
-      <Divider style={styles.divider} />
-
-      <View style={styles.section}>
-      <Title style={styles.sectionTitle}>Notre Équipe</Title>
-        <View style={styles.memberRow}>
-          <Avatar.Image size={60} source={{ uri: 'https://picsum.photos/80' }} style={styles.memberAvatar} />
-          <View>
-            <Title>John Doe</Title>
-            <Paragraph>Développeur Full-stack</Paragraph>
-          </View>
-        </View>
-        <View style={styles.memberRow}>
-          <Avatar.Image size={60} source={{ uri: 'https://picsum.photos/81' }} style={styles.memberAvatar} />
-          <View>
-            <Title>Jane Smith</Title>
-            <Paragraph>Designer UX/UI</Paragraph>
-            </View>
-      </View>
-    <View style={styles.memberRow}>
-      <Avatar.Image size={60} source={{ uri: 'https://picsum.photos/82' }} style={styles.memberAvatar} />
-      <View>
-        <Title>Bob Johnson</Title>
-        <Paragraph>Expert en santé numérique</Paragraph>
-      </View>
-    </View>
-  </View>
 
   <Divider style={styles.divider} />
 
   <View style={styles.section}>
-    <Title style={styles.sectionTitle}>Contactez-nous</Title>
-    <Paragraph>Pour toute question ou demande d'assistance, n'hésitez pas à nous contacter.</Paragraph>
+    <Title style={styles.sectionTitle}>Contact us</Title>
     <Button icon="email" mode="contained" style={styles.contactButton}>
-      Envoyer un e-mail
+      Send mail
     </Button>
   </View>
 </ScrollView>
@@ -151,14 +123,6 @@ const styles = StyleSheet.create({
     divider: {
       marginVertical: 20,
       marginHorizontal: 50,
-    },
-    memberRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 10,
-    },
-    memberAvatar: {
-      marginRight: 10,
     },
     contactButton: {
       marginVertical: 10,
